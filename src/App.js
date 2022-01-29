@@ -1,6 +1,8 @@
 import { Formik, Form, Field, ErrorMessage } from "formik"
 import TextInput from "./components/TextInput.js"
 import Checkbox from "./components/Checkbox.js"
+import Select from "./components/Select.js"
+import Radio from "./components/Radio.js"
 
 const validate = (values) => {
   const errors = {}
@@ -17,6 +19,10 @@ const validate = (values) => {
     errors.lastname = "El apellido es muy corto"
   }
 
+  if(!values.radio) {
+    errors.radio = "Requerido"
+  }
+
   return errors
 }
 
@@ -24,7 +30,7 @@ function App() {
 
   return (
     <Formik 
-        initialValues={{name: "", lastname: "", email: ""}}
+        initialValues={{name: "", lastname: "", email: "", radio: ""}}
         validate={validate}
         onSubmit={values => console.log(values)}>
 
@@ -32,19 +38,27 @@ function App() {
             <TextInput name="name" label="Nombre"/>
             <br />
     
-            <label>Apellido</label>
-            <Field name="lastname" type="text"/>
-            <ErrorMessage name="lastname"/>
+            <TextInput name="lastname" label="Apellido"/>
             <br />
     
-            <label>Email</label>
-            <Field name="email" type="email"/>
-            <ErrorMessage name="email"/>
+            <TextInput name="email" label="Email"/>
             <br />
+
+            <Select name="chancho" label="Tipo de chancho">
+              <option value="">Seleccione chancho</option>
+              <option value="felipe">Felipe</option>
+              <option value="chanchitoFeliz">Chanchito feliz</option>
+              <option value="chanchitoTriste">Chanchito triste</option>
+            </Select>
 
             <Checkbox name="accept">
               Aceptar términos y condiciones
             </Checkbox>
+
+            <Radio name="radio" value="chanchito1" label="chanchito1"/>
+            <Radio name="radio" value="chanchito2" label="chanchito2"/>
+            <Radio name="radio" value="chanchito3" label="chanchito3"/>
+            <ErrorMessage name="radio" />
 
             <button type="submit">Enviar</button>
         </Form>
